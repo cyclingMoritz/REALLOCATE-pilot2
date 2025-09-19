@@ -1,0 +1,15 @@
+public/js/env.js
+public/assets
+
+public/tests
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv

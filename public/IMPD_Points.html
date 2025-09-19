@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Climate Shelters Map 1</title>
+  <meta property="og:description" content="Climate shelters visualization map 1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.css" />
+  <script src="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.js"></script>
+
+  <script src="js/layers_IMPD.js"></script>
+  <script src="js/utils.js"></script>
+  <link href="css/main.css" rel="stylesheet" />
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Map configuration
+      let selectedLayers = [];
+      selectedLayers.push(layers[1],layers[2],layers[3]);
+      let selectedPopUpLayers = [];
+      selectedPopUpLayers.push(layers[1], layers[2], layers[3]);
+
+
+      // Map rotation states
+      let rotationStates = {
+        userInteracting: false,
+        rotationEnabled: false
+      }
+
+      // Collapse Legend
+      const collapseButton = document.querySelector(".le-collapsible");
+      const legendContent = document.querySelector(".legend-content");
+      const collapseContent = `<p>Legend</p><img src="icons/angle-small-down-vcityblue.svg"/>`;
+      const collapseClass = "collapse";
+
+      let collapsedElements = [legendContent, collapseButton];
+
+      collapseButton.onclick= () => toggle(collapsedElements, collapseButton, collapseContent, collapseContent, collapseClass);
+
+      // Map creation
+      const map = addMap(baseCoordinates);
+      addControls(map, selectedLayers, rotationStates);
+      addButtons(map, selectedLayers); //Also adds legend
+
+      map.on("load", () => {
+        addSlots(map, selectedLayers.length); //For layer positioning "z-index"
+
+        selectedLayers.forEach((layer, position) => {
+          let data_dir = `data/${layer.sourceLayerName}.geojson`;
+          sendRequest(data_dir).then(function (layerData) {
+            addSources(map, layerData, layer.sourceLayerName, layer.sourceType);
+            addLayers(map, layer.layerType, layer.sourceLayerName, layer.symbolization, layer.states.visible, `layerIndex${position}`);
+            if (layer.states.popUps) {
+              // check if current layer is in the selected layers array
+              if (selectedPopUpLayers.some(l => l.sourceLayerName === layer.sourceLayerName)) {
+                addPopUps2(map, layer.sourceLayerName, layer.popUpFeatures.fields, layer.popUpFeatures.event);
+              }
+            }
+          }); //End of function from requested data
+        }); //End forEachLayer
+
+        // Events
+        map.on("idle", (e) => {
+          rotationStates.userInteracting = false;
+          rotateMap(map, rotationStates.rotationEnabled, rotationStates.userInteracting);
+        }); //End of map.onIdle
+
+        // Pause spinning on interaction -> solves clicking twice
+        map.on('mousedown', () => {
+          rotationStates.userInteracting = true;
+        });
+      }); //End of map.onLoad
+    }); //End of OnLoadingDOMContent
+  </script>
+</head>
+
+<body>
+  <div id="map"></div>
+  <div class="interactive-legend">
+    <div id="layerButtons" class="interactive-panel border legend-content"></div>
+    <div class="interactive-panel border le-collapsible"><p>Legend</p><img src="icons/angle-small-down-vcityblue.svg"/></div>
+  </div>
+</body>
+</html>
