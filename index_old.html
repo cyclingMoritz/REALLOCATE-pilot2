@@ -44,6 +44,9 @@
       addButtons(map, selectedLayers); //Also adds legend
 
       map.on("load", () => {
+        // 1. Add PoPS and layers
+
+
         addSlots(map, selectedLayers.length); //For layer positioning "z-index"
 
         selectedLayers.forEach((layer, position) => {
@@ -66,7 +69,7 @@
           rotateMap(map, rotationStates.rotationEnabled, rotationStates.userInteracting);
         }); //End of map.onIdle
 
-        // Pause spinning on interaction -> solves clicking twice
+        // 2. Rotation event
         map.on('mousedown', () => {
           rotationStates.userInteracting = true;
         });
