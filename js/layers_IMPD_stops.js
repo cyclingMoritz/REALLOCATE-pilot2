@@ -80,25 +80,29 @@ var layers = [
       dateRange: false,
     },
     popUps: {
-      "event": "mousemove",
-      "popUpFeatures": [
+      event: "mousemove",
+      popUpFeatures: [
         {
-          "type": "keyword",
-          "text": "Type: ",
-          "value": "Type"
+          type: "title",      // Tells the JS to render this as an <h3>
+          value: "Type"       // The GeoJSON property to grab
         },
         {
-          "type": "keyword",
-          "text": "Evaluation: ",
-          "value": "Evaluation"
+          type: "keyword",       // Tells the JS to render the colored badge
+          text: "Evaluation: ",
+          value: "Evaluation"
         },
         {
-          "type": "keyword",
-          "text": "Value: ",
-          "value": "value"
-        },
+          type: "keyword",    // Tells the JS to render standard text
+          text: "Value: ",
+          value: "Value"
+        }
       ]
-      },
+    },
+    popUpFeatures: {
+      event: "click",
+      fields: ["Type", "Evaluation", "Value"]
+      // img: "image" // optional, you can add later if needed
+    },
     filterBy: {
       active: false,
       fFeature: "Type",
@@ -169,26 +173,30 @@ var layers = [
       filterLayer: false,
       dateRange: false,
     },
-    popUps: {
-      "event": "mousemove",
-      "popUpFeatures": [
+popUps: {
+      event: "mousemove",
+      popUpFeatures: [
         {
-          "type": "keyword",
-          "text": "Type: ",
-          "value": "Type"
+          type: "title",      // Tells the JS to render this as an <h3>
+          value: "Type"       // The GeoJSON property to grab
         },
         {
-          "type": "keyword",
-          "text": "Evaluation: ",
-          "value": "Evaluation"
+          type: "keyword",       // Tells the JS to render the colored badge
+          text: "Evaluation: ",
+          value: "Evaluation"
         },
         {
-          "type": "keyword",
-          "text": "Value: ",
-          "value": "value"
-        },
+          type: "keyword",    // Tells the JS to render standard text
+          text: "Value: ",
+          value: "Value"
+        }
       ]
-      },
+    },
+    popUpFeatures: {
+      event: "click",
+      fields: ["Type", "Evaluation", "Value"]
+      // img: "image" // optional, you can add later if needed
+    },
     filterBy: {
       active: false,
       fFeature: "Type",
@@ -258,26 +266,30 @@ var layers = [
       filterLayer: false,
       dateRange: false,
     },
-    popUps: {
-      "event": "mousemove",
-      "popUpFeatures": [
+popUps: {
+      event: "mousemove",
+      popUpFeatures: [
         {
-          "type": "keyword",
-          "text": "Type: ",
-          "value": "Type"
+          type: "title",      // Tells the JS to render this as an <h3>
+          value: "Type"       // The GeoJSON property to grab
         },
         {
-          "type": "keyword",
-          "text": "Evaluation: ",
-          "value": "Evaluation"
+          type: "keyword",    // Tells the JS to render standard text
+          text: "Name: ",
+          value: "NOM_ACCÉS"
         },
         {
-          "type": "keyword",
-          "text": "Value: ",
-          "value": "value"
-        },
+          type: "keyword",       // Tells the JS to render the colored badge
+          text: "Evaluation: ",
+          value: "Evaluation"
+        }
       ]
-      },
+    },
+    popUpFeatures: {
+      event: "click",
+      fields: ["Type", "Evaluation"]
+      // img: "image" // optional, you can add later if needed
+    },
     filterBy: {
       active: false,
       fFeature: "Type",
@@ -339,26 +351,30 @@ var layers = [
       filterLayer: false,
       dateRange: false,
     },
-    popUps: {
-      "event": "mousemove",
-      "popUpFeatures": [
+popUps: {
+      event: "mousemove",
+      popUpFeatures: [
         {
-          "type": "keyword",
-          "text": "Type: ",
-          "value": "Type"
+          type: "title",      // Tells the JS to render this as an <h3>
+          value: "Type"       // The GeoJSON property to grab
         },
         {
-          "type": "keyword",
-          "text": "Evaluation: ",
-          "value": "Evaluation"
+          type: "keyword",    // Tells the JS to render standard text
+          text: "Name: ",
+          value: "NOM_PARADA"
         },
         {
-          "type": "keyword",
-          "text": "Value: ",
-          "value": "value"
-        },
+          type: "keyword",       // Tells the JS to render the colored badge
+          text: "Evaluation: ",
+          value: "Evaluation"
+        }
       ]
-      },
+    },
+    popUpFeatures: {
+      event: "click",
+      fields: ["Type", "Evaluation"]
+      // img: "image" // optional, you can add later if needed
+    },
     filterBy: {
       active: false,
       fFeature: "Type",
@@ -401,25 +417,33 @@ var layers = [
       dateRange: false,
     },
     popUps: {
-      "event": "mousemove",
-      "popUpFeatures": [
-        {
-          "type": "keyword",
-          "text": "Type: ",
-          "value": "Type"
+          event: "mousemove",
+          popUpFeatures: [
+            {
+              type: "title",       // Now the Name becomes the <h3> automatically!
+              value: "Type"
+            },
+            {
+              type: "keyword",
+              text: "Neighbourhood: ",
+              value: "Name"
+            },
+            {
+              type: "keyword",
+              text: "Neighbourhood n: ",
+              value: "Number"
+            },
+            {
+              type: "keyword",
+              text: "Score: ",
+              value: "Accessibility Score"
+            }
+          ]
         },
-        {
-          "type": "keyword",
-          "text": "Evaluation: ",
-          "value": "Evaluation"
-        },
-        {
-          "type": "keyword",
-          "text": "Value: ",
-          "value": "value"
-        },
-      ]
-      },
+    popUpFeatures: {
+      event: "click",
+      fields: [ "Name","Number", "Accessibility Score"]
+    },
     filterBy: {
       active: false,
       fFeature: "Number",
