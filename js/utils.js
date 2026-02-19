@@ -467,40 +467,48 @@ function addPopUps2(map, layerName, fields, event) {
   map.on("mouseenter", layerName, () => map.getCanvas().style.cursor = "pointer");
   map.on("mouseleave", layerName, () => map.getCanvas().style.cursor = "");
 } //End of addPopUps2
-
 function createPopupContent(layer, currentFeature) {
-  let content = ""; 
+  const props = currentFeature.properties;
   
+  // 1. Clean, modern wrapper with a neutral text color
+  let html = `<div class="popup-content" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 13px; color: #333; line-height: 1.5; min-width: 160px;">`;
+
+  // 2. Modest Title: Uppercase, subtle gray, separated by a thin bottom border
+  const titleFeature = layer.popUps.popUpFeatures.find(f => f.type === "title");
+  if (titleFeature && props[titleFeature.value]) {
+    html += `<div style="font-weight: 600; font-size: 12px; text-transform: uppercase; color: #666; letter-spacing: 0.5px; border-bottom: 1px solid #eaeaea; padding-bottom: 6px; margin-bottom: 8px;">
+                ${props[titleFeature.value]}
+             </div>`;
+  }
+
+  // 3. Data Container: Flexbox column for row spacing
+  html += `<div style="display:flex; flex-direction:column; gap:6px;">`;
+
+  // 4. Loop through the features
   layer.popUps.popUpFeatures.forEach(feature => {
+    // Skip the title since we already rendered it at the top
+    if (feature.type === "title") return;
 
-    let value = currentFeature.properties[feature.value];
+    let rawValue = props[feature.value] || "N/A";
 
-    if (feature.type === "title") { 
-      content += `<h1>${value}</h1>`; } 
-    else if (feature.type === "image") { 
-      content += `<img src="${value}" alt="${feature.alt || ''}" style="max-width: 100%;"><br>`; } 
-    else if (feature.type === "keyword") {
-      content += `<strong>${feature.text}</strong>${value}<br>`; } 
-    else if (feature.type === "text") { 
-      content += `<p>${feature.text}</p>`; } 
-    else if (feature.type === "list") {
-      if (typeof value === 'string') {
-        value = JSON.parse(value);
-      }
-      content += value.map(subFeature => {    
-        const color = feature.symb[subFeature.name] || 'black'; // Default to black if no color is found
-        const subFeatures = Object.values(subFeature);
-        return `<p style="color: ${color}"><strong>${subFeatures[0]}: </strong>${subFeatures[1]}<br><p/>`
-      }).join("");
+    // 5. Homogeneous layout: Keys aligned left, Values aligned right
+    if (feature.type === "keyword") {
+      // We remove the trailing colon from the text if it exists to keep it clean, 
+      // or you can just update your layers.js to remove the colons from "text: 'Score: '"
+      let cleanText = feature.text.replace(':', '').trim(); 
+
+      html += `<div style="display: flex; justify-content: space-between; gap: 15px;">
+                 <span style="font-weight: 500; color: #777;">${cleanText}</span>
+                 <span style="font-weight: 400; color: #111; text-align: right;">${rawValue}</span>
+               </div>`;
     }
-    else {          
-      // Fallback: just show the value          
-      content += `${value || feature.text}<br>`;        
-    }      
-  });    
-  return content; 
-}
+  });
 
+  // 6. Close containers
+  html += `</div></div>`;
+  
+  return html;
+}
 function addHighlight(map, layerIDtrial) {
   let hoveredStateId = null;
 
