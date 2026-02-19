@@ -6,6 +6,7 @@ var baseBounds = [
 var mainAttribution = "Map by BSC - DataViz Team";
 //Order by: lower layers first, top layers last
 var layers = [
+
   {
     name: "Accessibility Points",
     sourceLayerName: "bsc_pilot2_all", //source-layer & source
@@ -64,7 +65,7 @@ var layers = [
       fFeature: "Type",
     },
   },
-  
+  // Slope
   {
     name: "Slope",
     sourceLayerName: "IMPD_slope", //source-layer & source
@@ -144,6 +145,7 @@ var layers = [
       fFeature: "Type",
     },
   },
+  // Width
     {
     name: "Width",
     sourceLayerName: "IMPD_width", //source-layer & source
@@ -160,6 +162,8 @@ var layers = [
         ["get", "Evaluation"],   // property name in your GeoJSON
         "Accessible", "#A6D96A",
         "Partially accessible", "#F6CF71",
+        "Non accessible", "#F03B20",
+
         /* default color */ "hsl(0, 0%, 70%)"
       ],
       "circle-radius": [
@@ -187,6 +191,13 @@ var layers = [
       display: "inline-block",
       backgroundColor: "#F6CF71",
       range: ["Partially accessible"]
+    },
+
+    {
+      styleHeight: "12px",
+      display: "inline-block",
+      backgroundColor: "#F03B20",
+      range: ["Non accessible"]
     }
       ],
     },
@@ -209,6 +220,7 @@ var layers = [
       fFeature: "Type",
     },
   },
+  // Metro Access
     {
     name: "Metro Access",
     sourceLayerName: "IMPD_metro", //source-layer & source
@@ -223,9 +235,9 @@ var layers = [
       "circle-color": [
         "match",
         ["get", "Evaluation"],   // property name in your GeoJSON
-        "Accessible", "#A6D96A",
-        "Partially accessible","#F6CF71",
-        "Non accessible", "#F03B20",
+        "Elevator", "#A6D96A",
+        "Step-free access","#F6CF71",
+        "Stairs only", "#F03B20",
         /* default color */ "hsl(0, 0%, 70%)"
       ],
       "circle-radius": [
@@ -246,20 +258,20 @@ var layers = [
       styleHeight: "12px",
       display: "inline-block",
       backgroundColor: "#A6D96A",
-      range: ["Accessible"]
+      range: ["Elevator"]
     },
     {
       styleHeight: "12px",
       display: "inline-block",
       backgroundColor: "#F6CF71",
-      range: ["Partially accessible"]
+      range: ["Step-free access"]
     },
 
     {
       styleHeight: "12px",
       display: "inline-block",
       backgroundColor: "#F03B20",
-      range: ["Non accessible"]
+      range: ["Stairs only"]
     }
       ],
     },
@@ -282,6 +294,7 @@ var layers = [
       fFeature: "Type",
     },
   },
+  // Bus Stops
     {
     name: "Bus Stops",
     sourceLayerName: "IMPD_bus", //source-layer & source
@@ -296,8 +309,8 @@ var layers = [
       "circle-color": [
         "match",
         ["get", "Evaluation"],   // property name in your GeoJSON
-        "Accessible", "#A6D96A",
-        "Non accessible", "#F03B20",
+        "Has PID", "#A6D96A",
+        "No PID", "#F03B20",
         /* default color */ "hsl(0, 0%, 70%)"
       ],
       "circle-radius": [
@@ -318,13 +331,13 @@ var layers = [
       styleHeight: "12px",
       display: "inline-block",
       backgroundColor: "#A6D96A",
-      range: ["Accessible"]
+      range: ["Has PID"]
     },
     {
       styleHeight: "12px",
       display: "inline-block",
       backgroundColor: "#F03B20",
-      range: ["Non accessible"]
+      range: ["No PID"]
     }
       ],
     },
