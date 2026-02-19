@@ -17,10 +17,11 @@
     document.addEventListener('DOMContentLoaded', function () {
       // Map configuration
       let selectedLayers = [];
-      selectedLayers.push(layers[1],layers[2],layers[3],layers[4],layers[5]);
-      let selectedPopUpLayers = [];
-      selectedPopUpLayers.push(layers[1], layers[2], layers[3],layers[4],layers[5]);
-
+      selectedLayers.push(layers[0],layers[1],layers[2],layers[3],layers[4]);
+      // let selectedPopupLayers = [];
+      // selectedPopupLayers.push(layers[0],layers[1], layers[2], layers[3],layers[4]);
+ 
+      const selectedPopupLayers = layers.filter(layer => layer.states.popUps).map(layer => layer.sourceLayerName);
 
       // Map rotation states
       let rotationStates = {
@@ -33,7 +34,10 @@
       const legendContent = document.querySelector(".legend-content");
       const collapseContent = `<p>Legend</p><img src="icons/angle-small-down-vcityblue.svg"/>`;
       const collapseClass = "collapse";
-
+      const popup = new maplibregl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      });
       let collapsedElements = [legendContent, collapseButton];
 
       collapseButton.onclick= () => toggle(collapsedElements, collapseButton, collapseContent, collapseContent, collapseClass);
@@ -51,14 +55,48 @@
           sendRequest(data_dir).then(function (layerData) {
             addSources(map, layerData, layer.sourceLayerName, layer.sourceType);
             addLayers(map, layer.layerType, layer.sourceLayerName, layer.symbolization, layer.states.visible, `layerIndex${position}`);
-            if (layer.states.popUps) {
-              // check if current layer is in the selected layers array
-              if (selectedPopUpLayers.some(l => l.sourceLayerName === layer.sourceLayerName)) {
-                addPopUps2(map, layer.sourceLayerName, layer.popUpFeatures.fields, layer.popUpFeatures.event);
-              }
-            }
+
           }); //End of function from requested data
         }); //End forEachLayer
+
+
+        // 1. Popups: outside to avoid adding an event listener to 15 layers
+        map.on("mousemove", (e) => {
+          // Query all popup-eligible layers at once
+          const features = map.queryRenderedFeatures(e.point, {
+            layers: selectedPopupLayers
+          });
+          
+          // If no feature was selected
+          if (!features.length) {
+            // console.log("No feature")
+            popup.remove();
+            map.getCanvas().style.cursor = '';
+            return;
+          }
+
+          // queryRenderedFeatures returns features in render order (top layer first)
+          // So features[0] is the topmost visible feature — show only that one
+          const topFeature = features[0];
+          // console.log(topFeature)
+          map.getCanvas().style.cursor = 'pointer';
+
+          // Select the layer content for the popup activated top layer
+          let selectedLayer = selectedLayers.find(layer => layer.sourceLayerName === topFeature.layer.id);
+          const content = createPopupContent(selectedLayer, topFeature); 
+
+          popup
+            .setLngLat(e.lngLat)
+            .setHTML(content)
+            .addTo(map);
+        });
+        map.on('mouseleave', () => {
+          popup.remove();
+          map.getCanvas().style.cursor = '';
+        });
+
+
+
 
         // Events
         map.on("idle", (e) => {
