@@ -468,6 +468,38 @@ function addPopUps2(map, layerName, fields, event) {
   map.on("mouseleave", layerName, () => map.getCanvas().style.cursor = "");
 } //End of addPopUps2
 
+function createPopupContent(layer, currentFeature) {
+  let content = ""; 
+  
+  layer.popUps.popUpFeatures.forEach(feature => {
+
+    let value = currentFeature.properties[feature.value];
+
+    if (feature.type === "title") { 
+      content += `<h1>${value}</h1>`; } 
+    else if (feature.type === "image") { 
+      content += `<img src="${value}" alt="${feature.alt || ''}" style="max-width: 100%;"><br>`; } 
+    else if (feature.type === "keyword") {
+      content += `<strong>${feature.text}</strong>${value}<br>`; } 
+    else if (feature.type === "text") { 
+      content += `<p>${feature.text}</p>`; } 
+    else if (feature.type === "list") {
+      if (typeof value === 'string') {
+        value = JSON.parse(value);
+      }
+      content += value.map(subFeature => {    
+        const color = feature.symb[subFeature.name] || 'black'; // Default to black if no color is found
+        const subFeatures = Object.values(subFeature);
+        return `<p style="color: ${color}"><strong>${subFeatures[0]}: </strong>${subFeatures[1]}<br><p/>`
+      }).join("");
+    }
+    else {          
+      // Fallback: just show the value          
+      content += `${value || feature.text}<br>`;        
+    }      
+  });    
+  return content; 
+}
 
 function addHighlight(map, layerIDtrial) {
   let hoveredStateId = null;
