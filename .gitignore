@@ -1,6 +1,6 @@
 public/js/env.js
 public/assets
-
+context/
 public/tests
 
 # Python-generated files
