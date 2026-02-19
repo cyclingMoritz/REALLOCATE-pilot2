@@ -98,15 +98,6 @@ var layers = [
         }
       ]
     },
-    popUpFeatures: {
-      event: "click",
-      fields: ["Type", "Evaluation", "Value"]
-      // img: "image" // optional, you can add later if needed
-    },
-    filterBy: {
-      active: false,
-      fFeature: "Type",
-    },
   },
   // Width
     {
@@ -191,11 +182,6 @@ popUps: {
           value: "Value"
         }
       ]
-    },
-    popUpFeatures: {
-      event: "click",
-      fields: ["Type", "Evaluation", "Value"]
-      // img: "image" // optional, you can add later if needed
     },
     filterBy: {
       active: false,
@@ -285,11 +271,6 @@ popUps: {
         }
       ]
     },
-    popUpFeatures: {
-      event: "click",
-      fields: ["Type", "Evaluation"]
-      // img: "image" // optional, you can add later if needed
-    },
     filterBy: {
       active: false,
       fFeature: "Type",
@@ -370,11 +351,6 @@ popUps: {
         }
       ]
     },
-    popUpFeatures: {
-      event: "click",
-      fields: ["Type", "Evaluation"]
-      // img: "image" // optional, you can add later if needed
-    },
     filterBy: {
       active: false,
       fFeature: "Type",
@@ -440,10 +416,7 @@ popUps: {
             }
           ]
         },
-    popUpFeatures: {
-      event: "click",
-      fields: [ "Name","Number", "Accessibility Score"]
-    },
+
     filterBy: {
       active: false,
       fFeature: "Number",
