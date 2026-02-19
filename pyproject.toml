@@ -3,7 +3,7 @@ name = "reallocate-bcn2"
 version = "0.1.0"
 description = "This project is aimed at integrating deliverable 5.4 from the reallocate project."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11, <3.14"
 dependencies = [
     "pandas",
     "numpy",
