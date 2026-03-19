@@ -221,29 +221,31 @@ popUps: {
       paint: {} // Must be empty so the validator doesn't complain!
     },
     legend: {
-      id: "legend-a",
+      id: "legend-metro", // Ensure this ID is unique
       class: "legend",
-      items:  [
-    {
-      styleHeight: "12px",
-      display: "inline-block",
-      backgroundColor: "#A6D96A",
-      range: ["Elevator"]
-    },
-    {
-      styleHeight: "12px",
-      display: "inline-block",
-      backgroundColor: "#F6CF71",
-      range: ["Step-free access"]
-    },
-
-    {
-      styleHeight: "12px",
-      display: "inline-block",
-      backgroundColor: "#F03B20",
-      range: ["Stairs only"]
-    }
-      ],
+      items: [
+        {
+          styleHeight: "12px",
+          display: "inline-block",
+          // Update this path to exactly where your green metro SVG is stored
+          icon: "icons/svgs/metro-marker-green.svg", 
+          range: ["Elevator"]
+        },
+        {
+          styleHeight: "12px",
+          display: "inline-block",
+          // Update this path to exactly where your yellow/amber metro SVG is stored
+          icon: "icons/svgs/metro-marker-yellow.svg", 
+          range: ["Step-free access"]
+        },
+        {
+          styleHeight: "12px",
+          display: "inline-block",
+          // Update this path to exactly where your red metro SVG is stored
+          icon: "icons/svgs/metro-marker-red.svg", 
+          range: ["Stairs only"]
+        }
+      ]
     },
     states: {
       visible: "visible",
@@ -312,22 +314,24 @@ popUps: {
       paint: {}
     },
     legend: {
-      id: "legend-a",
+      id: "legend-bus", // Ensure this ID is unique if your script uses it
       class: "legend",
-      items:  [
-    {
-      styleHeight: "12px",
-      display: "inline-block",
-      backgroundColor: "#A6D96A",
-      range: ["Has PID"]
-    },
-    {
-      styleHeight: "12px",
-      display: "inline-block",
-      backgroundColor: "#F03B20",
-      range: ["No PID"]
-    }
-      ],
+      items: [
+        {
+          styleHeight: "12px",
+          display: "inline-block",
+          // Update this path to exactly where your green bus SVG is stored
+          icon: "icons/svgs/bus-marker-green.svg", 
+          range: ["Has PID"]
+        },
+        {
+          styleHeight: "12px",
+          display: "inline-block",
+          // Update this path to exactly where your red bus SVG is stored
+          icon: "icons/svgs/bus-marker-red.svg", 
+          range: ["No PID"]
+        }
+      ]
     },
     states: {
       visible: true,
