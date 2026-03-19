@@ -1,0 +1,494 @@
+:root {
+  --side-panel-width: 20%;
+  --floating-panels-background: rgba(252, 250, 250, 0.9);
+  /* vCity-unpure-white */
+  --vCity-primary-blue: #003c73;
+  --vCity-primary-blue-hover: #003c73c2;
+  --vCity-secondary-blue: #bdccdc;
+  --vCity-secondary-grey: #61656d;
+
+  --big-font-size: 1.1rem;
+  --big-font-weight: 700;
+  --small-font-size: 1rem;
+  --small-font-weight: 400;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Montserrat, Helvetica, Arial, sans-serif;
+  background-color: white;
+  color: var(--vCity-primary-blue);
+  font-size: var(--small-font-size);
+}
+
+html,
+body,
+#map {
+  height: 100%;
+}
+
+/* FIX: Arreglar box-shadow */
+.maplibre-ctrl-icon {
+  color: var(--vCity-primary-blue);
+  cursor: pointer;
+  border-radius: 5px;
+  border-color: #cccccc;
+  background-color: white;
+}
+
+.maplibre-ctrl-icon:hover {
+  background-color: #cccccc;
+}
+
+.maplibregl-popup {
+  max-width: 200px;
+  font: 12px/20px;
+  text-align: center;
+}
+
+.chicboxes {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: var(--big-font-size);
+  font-weight: var(--big-font-weight);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.chicboxes input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border: solid var(--vCity-secondary-grey);
+  border-width: 1px;
+}
+
+/* When the checkbox is checked, add a blue background */
+.chicboxes input:checked~.checkmark {
+  background-color: var(--vCity-primary-blue);
+}
+
+/* On mouse-over, when the checkbox is checked, lighten the blue background */
+.chicboxes:hover input:checked~.checkmark {
+  background-color: var(--vCity-primary-blue-hover);
+}
+
+/* On mouse-over, when the checkbox is unchecked, add a light blue background color */
+.chicboxes:hover input~.checkmark {
+  background-color: var(--vCity-secondary-blue);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.chicboxes input:checked~.checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.chicboxes .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* Generic panel */
+.interactive-panel {
+  padding: 10px;
+  background-color: var(--floating-panels-background);
+}
+
+/* Generic border */
+.border {
+  border: 2px solid var(--vCity-primary-blue);
+  border-radius: 5px;
+}
+
+/* Generic flex-row */
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+/* Generic button */
+.button {
+  color: white;
+  background-color: var(--vCity-primary-blue);
+  border-radius: 2.5px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button:hover {
+  background-color: var(--vCity-primary-blue-hover);
+}
+
+.interactive-legend {
+  display: flex;
+  flex-direction: column;
+
+  position: fixed;
+  right: 20px;
+  bottom: 45px;
+  width: 250px;
+}
+
+/*Legend content*/
+.legend {
+  font-weight: var(--small-font-weight);
+  color: var(--vCity-secondary-grey);
+  /* FIX: Decide between sec grey and prim blue for attributes -> if grey, slider months grey */
+}
+
+.legend div span {
+  display: inline-block;
+  margin-right: 5px;
+  width: 10px;
+  height: 10px;
+
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 50%;
+  border-color: var(--vCity-secondary-grey);
+}
+
+.legend-content.collapse {
+  height: 0;
+  padding: 0;
+  border: none;
+  visibility: hidden;
+}
+
+/*Side-panel effects on legend*/
+.slide-legend {
+  right: calc(var(--side-panel-width) + 20px);
+  transition: right 0.3s ease;
+}
+
+.slide-legend.hide {
+  right: 20px;
+}
+
+.le-collapsible {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  z-index: 2;
+  height: 20px;
+  margin-top: 3px;
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+  transition: background-color 0.2s;
+}
+
+.le-collapsible:hover {
+  background-color: var(--vCity-secondary-blue);
+}
+
+.le-collapsible>img {
+  height: var(--big-font-size);
+}
+
+.le-collapsible.collapse>img {
+  rotate: 180deg;
+}
+
+.le-collapsible p {
+  align-self: center;
+}
+
+/* Slider */
+#sliderBox {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 40%;
+  font-size: var(--big-font-size);
+}
+
+#sliderBox>div:first-child {
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+#sliderDateLabel {
+  font-weight: var(--big-font-weight);
+}
+
+.slider,
+.slider::-webkit-slider-runnable-track,
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+.slider {
+  --trackLength: 100%;
+  --trackSize: 1.25em;
+  --thumbSize: 3.5em;
+  --thumbLength: calc(var(--trackLength) * 0.06);
+  --borderRadius: 1em;
+  --trackColor2: #e6ecf2;
+
+  width: var(--trackLength);
+  height: var(--thumbSize);
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  background-color: white;
+  background:
+    linear-gradient(to right,
+      transparent 20%,
+      var(--vCity-primary-blue) 20%,
+      var(--vCity-primary-blue) 20.3%,
+      transparent 20.3%,
+
+      transparent 79.5%,
+      var(--vCity-primary-blue) 79.5%,
+      var(--vCity-primary-blue) 79.8%,
+      transparent 79.8%);
+  border-radius: var(--borderRadius);
+  /* box-shadow: inset 1px 1px 3px rgba(223, 199, 199, 0.6); */
+}
+
+.slider::-webkit-slider-runnable-track {
+  cursor: pointer;
+  box-sizing: border-box;
+  width: var(--trackLength);
+  height: var(--trackSize);
+  border-radius: var(--borderRadius);
+  background:
+    linear-gradient(to right, var(--vCity-secondary-blue) calc(var(--value)*1%), var(--trackColor2) 0) content-box;
+}
+
+.slider::-moz-range-track {
+  cursor: pointer;
+  box-sizing: border-box;
+  width: var(--trackLength);
+  height: var(--trackSize);
+  border-radius: var(--borderRadius);
+  background:
+    linear-gradient(to right, var(--vCity-secondary-blue) calc(var(--value)*1%), var(--trackColor2) 0) content-box;
+}
+
+input[type='range']::-ms-track {
+  cursor: pointer;
+  border: none;
+  box-sizing: border-box;
+  width: var(--trackLength);
+  height: var(--trackSize);
+  border-radius: var(--borderRadius);
+  background:
+    linear-gradient(to right, var(--vCity-secondary-blue) calc(var(--value)*1%), var(--trackColor2) 0) content-box;
+  color: transparent;
+}
+
+.slider::-webkit-slider-thumb {
+  box-sizing: border-box;
+  width: var(--thumbLength);
+  height: var(--trackSize);
+  border-radius: var(--borderRadius);
+  background: var(--vCity-primary-blue);
+}
+
+.slider::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--thumbLength);
+  height: var(--trackSize);
+  border-radius: var(--borderRadius);
+  background: var(--vCity-primary-blue);
+}
+
+/* Edge slider thumb */
+
+.slider::-webkit-slider-thumb:hover {
+  cursor: grab;
+  background: var(--vCity-primary-blue-hover);
+}
+
+.slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+}
+
+.slider::-moz-range-thumb:hover {
+  cursor: grab;
+  cursor: -moz-grab;
+  background: var(--vCity-primary-blue-hover);
+}
+
+.slider::-moz-range-thumb:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+}
+
+/* Edge slider thumb hover */
+
+/* Edge slider thumb active */
+
+#monthList {
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Slider activation button */
+.play-button {
+  border: none;
+  height: 9%;
+  width: 4%;
+  align-self: center;
+}
+
+.play-button:disabled {
+  background-color: var(--vCity-secondary-grey);
+  cursor: not-allowed;
+}
+
+.play-button.transparent {
+  color: transparent;
+  background-color: transparent;
+  cursor: default;
+}
+
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: var(--side-panel-width);
+  height: 100vh;
+  background-color: var(--floating-panels-background);
+  box-sizing: border-box;
+  overflow: visible;
+  transition: transform 0.3s ease;
+}
+
+.side-panel.hide {
+  transform: translateX(100%);
+}
+
+.side-panel-content {
+  padding: 20px;
+  height: calc(100vh - 40px);
+  overflow-y: auto;
+  font-size: 20px;
+}
+
+.side-panel-toggle {
+  position: fixed;
+  top: 20px;
+  transition: right 0.3s ease;
+  right: calc(var(--side-panel-width) + 20px);
+  border: 1px solid var(--vCity-secondary-grey);
+  border-width: 1px;
+}
+
+.side-panel-toggle.hide {
+  right: 20px;
+}
+
+.side-panel-toggle>img {
+  height: var(--big-font-size);
+  filter: invert(1);
+}
+
+.side-panel-toggle.hide>img {
+  rotate: 180deg;
+}
+
+/* Date range table*/
+.date-range-table {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "start end"
+    "dStart dEnd";
+  gap: 10px;
+}
+
+.date-range-table>label {
+  font-weight: var(--big-font-weight);
+}
+
+.date-range-table>p.table-header {
+  grid-area: header;
+  margin: 0;
+}
+
+.date-range-table>label.table-start {
+  grid-area: start;
+}
+
+.date-range-table>input.table-date-start {
+  grid-area: dStart;
+}
+
+.date-range-table>label.table-end {
+  grid-area: end;
+}
+
+.date-range-table>input.table-date-end {
+  grid-area: dEnd;
+}
+
+input[type="date"] {
+  background-color: var(--vCity-primary-blue);
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+}
+
+input[type="date"]:hover {
+  background-color: var(--vCity-primary-blue-hover);
+}
+
+input::-webkit-datetime-edit-year-field {
+  color: white;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(1);
+}
+
+#categories-panel {
+  padding: 0;
+}
+
+#categories-panel p {
+  margin-bottom: 10px;
+}
