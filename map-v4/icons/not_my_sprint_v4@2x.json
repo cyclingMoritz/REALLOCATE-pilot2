@@ -1,0 +1,79 @@
+{
+  "bus": {
+    "height": 38,
+    "pixelRatio": 2,
+    "width": 38,
+    "x": 192,
+    "y": 0
+  },
+  "bus_green": {
+    "height": 38,
+    "pixelRatio": 2,
+    "width": 38,
+    "x": 192,
+    "y": 38
+  },
+  "bus_stop": {
+    "height": 192,
+    "pixelRatio": 2,
+    "width": 192,
+    "x": 0,
+    "y": 0
+  },
+  "information": {
+    "height": 38,
+    "pixelRatio": 2,
+    "width": 38,
+    "x": 192,
+    "y": 76
+  },
+  "marker": {
+    "height": 38,
+    "pixelRatio": 2,
+    "width": 38,
+    "x": 192,
+    "y": 114
+  },
+  "marker-stroked": {
+    "height": 38,
+    "pixelRatio": 2,
+    "width": 38,
+    "x": 192,
+    "y": 152
+  },
+  "rail": {
+    "height": 38,
+    "pixelRatio": 2,
+    "width": 38,
+    "x": 192,
+    "y": 190
+  },
+  "rail-metro": {
+    "height": 38,
+    "pixelRatio": 2,
+    "width": 38,
+    "x": 0,
+    "y": 192
+  },
+  "rail-metro_red": {
+    "height": 38,
+    "pixelRatio": 2,
+    "width": 38,
+    "x": 38,
+    "y": 192
+  },
+  "rail_purple": {
+    "height": 38,
+    "pixelRatio": 2,
+    "width": 38,
+    "x": 76,
+    "y": 192
+  },
+  "ranger-station": {
+    "height": 38,
+    "pixelRatio": 2,
+    "width": 38,
+    "x": 114,
+    "y": 192
+  }
+}
