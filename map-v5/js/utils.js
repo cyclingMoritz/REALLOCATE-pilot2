@@ -136,50 +136,21 @@ function addButtons(map, selectedLayers) {
 
     layerButtons.append(
       label,
-      addLegend2(layer.legend),
+      addLegend3(layer.legend),
       document.createElement("br")
     );
   }); //End of forEach selectedLayer
 } //End of addButtons
 
-function addLegend(legendData) {
-  let legend = document.createElement("div");
-  legend.id = legendData.id;
-  legend.className = legendData.class;
-  legendData.items.forEach((item) => {
-    let subDiv = document.createElement("div");
-    subDiv.innerHTML = `<span style="background-color: ${item.backgroundColor}"></span>`;
 
-    let range = item.range.join(" - ");
-    let text = document.createElement("i");
-    text.textContent = range;
-    subDiv.appendChild(text);
-    legend.appendChild(subDiv);
-  });
+function addLegend3(legendData) {
+  // Safety check: if no data is passed, return an empty div
+  if (!legendData) return document.createElement("div");
 
-  return legend;
-} //End of addLegend
+  const legend = document.createElement("div");
+  legend.className = legendData.class || "legend";
 
-function addLegend2(legendData) {
-  let legend = document.createElement("div");
-  legend.id = legendData.id;
-  legend.className = legendData.class;
-
-  // If legendData has "items" (discrete), render as before
-  if (legendData.items) {
-    legendData.items.forEach((item) => {
-      let subDiv = document.createElement("div");
-      subDiv.innerHTML = `<span style="background-color: ${item.backgroundColor}; display:${item.display}; height:${item.styleHeight}; width:12px; margin-right:5px;"></span>`;
-      
-      let text = document.createElement("i");
-      text.textContent = Array.isArray(item.range) ? item.range.join(" - ") : item.range;
-      subDiv.appendChild(text);
-
-      legend.appendChild(subDiv);
-    });
-  }
-
-  // If legendData has "gradient" (continuous), render as gradient bar
+  // --- SCENARIO 1: It's a Gradient Bar (Accessibility Score) ---
   if (legendData.gradient) {
     let gradDiv = document.createElement("div");
     gradDiv.style.height = "12px";
@@ -188,49 +159,53 @@ function addLegend2(legendData) {
     gradDiv.style.marginBottom = "5px";
     legend.appendChild(gradDiv);
 
-    // Add labels below the gradient
     let labelsDiv = document.createElement("div");
     labelsDiv.style.display = "flex";
     labelsDiv.style.justifyContent = "space-between";
+    
     legendData.gradient.range.forEach((label) => {
       let span = document.createElement("span");
       span.textContent = label.split("(")[0].trim();  // keep only number
       span.style.display = "inline-block";
-      span.style.width = "auto";     // don't force square
-      span.style.height = "auto";    // don't force height
-      span.style.margin = "0 2px";   // optional spacing
-      span.style.background = "none"; // remove background
-      span.style.border = "none";    // remove border
-      span.style.verticalAlign = "top"; // align with gradient bar
+      span.style.width = "auto";
+      span.style.height = "auto";
+      span.style.margin = "0 2px";
+      span.style.background = "none";
+      span.style.border = "none";
+      span.style.verticalAlign = "top";
       labelsDiv.appendChild(span);
     });
     legend.appendChild(labelsDiv);
+  } 
+  // --- SCENARIO 2: It has Discrete Items (Icons or Color Blocks) ---
+  else if (legendData.items) {
+    legendData.items.forEach((item) => {
+      let subDiv = document.createElement("div");
+      subDiv.className = "legend-item"; 
+
+      // If it's an icon (Bus/Metro)
+      if (item.icon) {
+        subDiv.innerHTML = `<img src="${item.icon}" alt="" style="width: 15px; height: 15px; vertical-align: middle; margin-right: 5px;">`;
+      } 
+      // If it's a color block (Slope)
+      else if (item.backgroundColor) {
+        subDiv.innerHTML = `<span style="background-color: ${item.backgroundColor}"></span>`;
+      }
+
+      // Add the text label
+      if (item.range) {
+        let range = item.range.join(" - ");
+        let text = document.createElement("i");
+        text.textContent = range;
+        subDiv.appendChild(text);
+      }
+      
+      legend.appendChild(subDiv);
+    });
   }
 
   return legend;
-} // End of addLegend2
-
-function addLegend3(legendData) {
-  const legend = document.createElement("div");
-  legend.className = legendData.class;
-  legendData.items.forEach((item) => {
-    let subDiv = document.createElement("div");
-
-    if (item.icon){
-      subDiv.innerHTML = `<img src="${item.icon}"></img>`;
-    } else {
-      subDiv.innerHTML = `<span style="background-color: ${item.backgroundColor}"></span>`;
-    }
-
-    let range = item.range.join(" - ");
-    let text = document.createElement("i");
-    text.textContent = range;
-    subDiv.appendChild(text);
-    legend.appendChild(subDiv);
-  });
-
-  return legend;
-} //End of addLegend3
+}
 
 
 
