@@ -339,7 +339,7 @@ function addSources(map, layer_data, sourceLayerName, sourceType) {
   });
 } //End of addSources
 
-function addLayers2(map, layerType, sourceLayerName, symbolization, bID) {
+function addLayers2(map, layerType, sourceLayerName, symbolization, visible, bID) {
   map.addLayer(
     {
       id: sourceLayerName,
