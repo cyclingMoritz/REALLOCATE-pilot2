@@ -83,46 +83,66 @@ p {
 .btn:hover {
   background-color: #b8ced4;
 }
-
-/* Footer Styling */
+/* Footer Matrix Styling */
 footer {
-  border-top: 1px solid #eee;
-  padding: 40px 50px 20px;
+    border-top: 1px solid #eee;
+    padding: 40px 50px 20px;
+    background-color: var(--bg-white);
 }
 
-.funding-section {
-  display: flex;
-  gap: 30px;
-  align-items: center;
-  margin-bottom: 30px;
+/* Add a bottom border to the matrix instead */
+.footer-matrix {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 30px 40px;
+    align-items: center;
+    
+    /* NEW: Add the border here */
+    border-bottom: 2px solid #ddd; 
+    padding-bottom: 30px; /* Give it some breathing room */
+    margin-bottom: 20px;
 }
 
-.funding-text {
-  font-size: 0.85rem;
-  color: #666;
-  line-height: 1.4;
+.matrix-logo-col img {
+    max-width: 100%;
+    height: auto;
+    max-height: 90px; /* Keeps the EU and CIVITAS logos reasonably sized */
 }
 
-.footer-logos img {
-  height: 60px;
-  margin-right: 20px;
+.matrix-text-col p {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
 }
 
+/* Specific layout for the bottom right cell */
+.mission-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.missions-logo {
+    height: 40px; /* The EU missions logo is smaller and sits inline with the text */
+    flex-shrink: 0; /* Prevents the logo from squishing */
+}
+
+/* Remove the top border from the bottom links */
 .footer-bottom {
-  border-top: 2px solid #ddd;
-  padding-top: 20px;
-  display: flex;
-  gap: 20px;
+    /* border-top: 2px solid #ddd;  <-- DELETE THIS LINE */
+    padding-top: 10px; /* Reduced since the gap is handled above */
+    display: flex;
+    gap: 20px;
 }
-
 .footer-bottom a {
-  color: var(--link-pink);
-  text-decoration: none;
-  font-size: 0.9rem;
+    color: var(--link-pink);
+    text-decoration: none;
+    font-size: 0.9rem;
 }
 
 .footer-bottom a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 /* Acknowledgements Grid Styling */
