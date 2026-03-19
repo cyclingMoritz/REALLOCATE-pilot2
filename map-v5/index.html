@@ -55,7 +55,7 @@
         addSlots(map, selectedLayers.length); //For layer positioning "z-index"
 
         selectedLayers.forEach((layer, position) => {
-          if (layer.sourceLayerName=="bizkaibus_stops" | layer.sourceLayerName=="IMPD_bus_icon"){
+          if (layer.sourceLayerName=="IMPD_bus" | layer.sourceLayerName=="IMPD_metro"){
             let data_dir = `data/${layer.sourceLayerName}.geojson`;
             sendRequest(data_dir).then(function (layerData) {
               addSources(map, layerData, layer.sourceLayerName, layer.sourceType);
@@ -63,7 +63,7 @@
               addLayers2(map, layer.layerType, layer.sourceLayerName, layer.symbolization, layer.states.visible, `layerIndex${position}`);
             });
           }
-          else{
+          else {
           let data_dir = `data/${layer.sourceLayerName}.geojson`;
           sendRequest(data_dir).then(function (layerData) {
             addSources(map, layerData, layer.sourceLayerName, layer.sourceType);
