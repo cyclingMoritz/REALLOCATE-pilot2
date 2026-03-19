@@ -1,0 +1,58 @@
+{
+  "bus-marker-": {
+    "height": 1024,
+    "pixelRatio": 2,
+    "width": 1024,
+    "x": 0,
+    "y": 0
+  },
+  "bus-marker-green": {
+    "height": 1024,
+    "pixelRatio": 2,
+    "width": 1024,
+    "x": 0,
+    "y": 1024
+  },
+  "bus-marker-red": {
+    "height": 1024,
+    "pixelRatio": 2,
+    "width": 1024,
+    "x": 1024,
+    "y": 0
+  },
+  "bus-marker-yellow": {
+    "height": 1024,
+    "pixelRatio": 2,
+    "width": 1024,
+    "x": 1024,
+    "y": 1024
+  },
+  "metro-marker": {
+    "height": 1024,
+    "pixelRatio": 2,
+    "width": 1024,
+    "x": 2048,
+    "y": 0
+  },
+  "metro-marker-green": {
+    "height": 1024,
+    "pixelRatio": 2,
+    "width": 1024,
+    "x": 3072,
+    "y": 0
+  },
+  "metro-marker-red": {
+    "height": 1024,
+    "pixelRatio": 2,
+    "width": 1024,
+    "x": 2048,
+    "y": 1024
+  },
+  "metro-marker-yellow": {
+    "height": 1024,
+    "pixelRatio": 2,
+    "width": 1024,
+    "x": 3072,
+    "y": 1024
+  }
+}
