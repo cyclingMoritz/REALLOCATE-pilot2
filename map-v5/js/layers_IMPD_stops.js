@@ -188,35 +188,37 @@ popUps: {
       fFeature: "Type",
     },
   },
-  // Metro Access
-    {
+// Metro Access
+  {
     name: "Metro Access",
-    sourceLayerName: "IMPD_metro", //source-layer & source
-    attribution:
-      "",
+    sourceLayerName: "IMPD_metro", // source-layer & source
+    attribution: "",
     sourceType: "geojson",
-    layerType: "circle",
+    layerType: "symbol", // Changed from "circle" to "symbol"
     symbolization: {      
-      // "circle-radius": 5,
-      // "circle-stroke-width": 1,
-      // "circle-stroke-color": "#333",
-      "circle-color": [
-        "match",
-        ["get", "Evaluation"],   // property name in your GeoJSON
-        "Elevator", "#A6D96A",
-        "Step-free access","#F6CF71",
-        "Stairs only", "#F03B20",
-        /* default color */ "hsl(0, 0%, 70%)"
-      ],
-      "circle-radius": [
-        "interpolate",
-        ["linear"],
-        ["zoom"],
-        12, 0,
-        15, 5,
-        20, 5
-      ]
-
+      layout: {
+        visibility: "visible",
+        "icon-allow-overlap": true,
+        // Match the image based on the Evaluation property
+        "icon-image": [
+          "match",
+          ["get", "Evaluation"],
+          "Elevator", "metro-marker-green",         // <-- Replace with your actual green SVG filename from Spreet
+          "Step-free access", "metro-marker-yellow", // <-- Replace with your actual yellow SVG filename from Spreet
+          "Stairs only", "metro-marker-red",        // <-- Replace with your actual red SVG filename from Spreet
+          /* default */ "metro-marker"      // <-- Replace with your default SVG filename
+        ],
+        // Adapted zoom interpolation (using decimals for scale instead of pixels)
+        "icon-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, 0,
+          15, 0.05, // Adjust this decimal to match the size you want!
+          20, 0.10  // Adjust this decimal to match the size you want!
+        ]
+      },
+      paint: {} // Must be empty so the validator doesn't complain!
     },
     legend: {
       id: "legend-a",
@@ -252,20 +254,20 @@ popUps: {
       filterLayer: false,
       dateRange: false,
     },
-popUps: {
+    popUps: {
       event: "mousemove",
       popUpFeatures: [
         {
-          type: "title",      // Tells the JS to render this as an <h3>
-          value: "Type"       // The GeoJSON property to grab
+          type: "title",      
+          value: "Type"       
         },
         {
-          type: "keyword",    // Tells the JS to render standard text
+          type: "keyword",    
           text: "Name: ",
-          value: "NOM_ACCÉS"
+          value: "NOM_ACCÉS" // Notice it keeps your specific Metro property!
         },
         {
-          type: "keyword",       // Tells the JS to render the colored badge
+          type: "keyword",       
           text: "Evaluation: ",
           value: "Evaluation"
         }
@@ -276,34 +278,38 @@ popUps: {
       fFeature: "Type",
     },
   },
-  // Bus Stops
-    {
-    name: "Bus Stops",
-    sourceLayerName: "IMPD_bus", //source-layer & source
-    attribution:
-      "",
-    sourceType: "geojson",
-    layerType: "circle",
-    symbolization: {      
-      // "circle-radius": 5,
-      // "circle-stroke-width": 1,
-      // "circle-stroke-color": "#333",
-      "circle-color": [
-        "match",
-        ["get", "Evaluation"],   // property name in your GeoJSON
-        "Has PID", "#A6D96A",
-        "No PID", "#F03B20",
-        /* default color */ "hsl(0, 0%, 70%)"
-      ],
-      "circle-radius": [
-        "interpolate",
-        ["linear"],
-        ["zoom"],
-        12, 0,
-        15, 5,
-        20, 5
-      ]
 
+
+// Bus Stops// Bus Stops (Basic Icon Test)
+{
+    name: "Bus Stops",
+    sourceLayerName: "IMPD_bus", 
+    attribution: "",
+    sourceType: "geojson",
+    layerType: "symbol", 
+    symbolization: {      
+    layout: {
+          visibility: "visible",
+          "icon-allow-overlap": true,
+          // Swap the image based on the Evaluation property
+          "icon-image": [
+            "match",
+            ["get", "Evaluation"],
+            "Has PID", "bus-marker-green", // <-- Your actual green icon name
+            "No PID", "bus-marker-red",    // <-- Your actual red icon name
+            "bus-marker-default"           // <-- Your default icon name
+          ],
+          // Re-adding your zoom interpolation!
+          "icon-size": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            12, 0,     // At zoom 12 and below, the icon disappears (size 0)
+            15, 0.05,  // At zoom 15, scale to 15% (Adjust this decimal!)
+            20, 0.10   // At zoom 20, scale to 25% (Adjust this decimal!)
+          ]
+        },
+      paint: {}
     },
     legend: {
       id: "legend-a",
@@ -324,28 +330,27 @@ popUps: {
       ],
     },
     states: {
-      visible: "visible",
+      visible: true,
       popUps: true,
       icons: true,
-      filterCat: true,
       highlight: false,
-      filterLayer: false,
+      category: true,
       dateRange: false,
     },
-popUps: {
+    popUps: {
       event: "mousemove",
       popUpFeatures: [
         {
-          type: "title",      // Tells the JS to render this as an <h3>
-          value: "Type"       // The GeoJSON property to grab
+          type: "title",      
+          value: "Type"       
         },
         {
-          type: "keyword",    // Tells the JS to render standard text
+          type: "keyword",    
           text: "Name: ",
           value: "NOM_PARADA"
         },
         {
-          type: "keyword",       // Tells the JS to render the colored badge
+          type: "keyword",       
           text: "Evaluation: ",
           value: "Evaluation"
         }
@@ -356,6 +361,7 @@ popUps: {
       fFeature: "Type",
     },
   },
+
 
   {
     name: "Accessibility Score",
@@ -422,128 +428,7 @@ popUps: {
       fFeature: "Number",
     },
   },
-  // Autobuses
-{
-    name: "Paradas BizkaiBus",
-    sourceLayerName: "bizkaibus_stops", //source-layer & source
-    sourceType: "geojson",
-    layerType: "symbol",
-    symbolization: {
-      layout: {
-        visibility: "visible",
-        "icon-image": DATA_RETRIEVAL.ICONS.GENERIC_MARKER, // <- name corresponds to the original svg icon name
-        "icon-size": 1.5,
-      },
-      paint: {
-        "icon-color": "#A0CD5F",
-        "icon-halo-color": "black",
-        "icon-halo-width": 2,
-      },
-    },
-    legend: {
-      class: "legend",
-      items: [
-        {
-          styleHeight: "5px",
-          display: "inline-block",
-          icon:"assets/img/marker-stroked.svg",// DATA_RETRIEVAL.LOCAL_ICONS.GENERIC_MARKER,g/,DATA_RETRIERIC_MARKER,
-          range: ["Estaciones"],
-        },
-      ],
-    },
-    states: {
-      popUps: true,
-      icons: true,
-      highlight: false,
-      category: true,
-      dateRange: false,
-    },
-    popUpFeatures: {
-      event: "click",
-      fields: ["line_id", "Denominacion"],
-      // img: "image" // optional, you can add later if needed
-    },
-    filterBy: {
-      active: true,
-      fFeature: "category",
-    },
-  },
 
-// Bus Stops// Bus Stops (Basic Icon Test)
-{
-    name: "Bus Stops",
-    sourceLayerName: "IMPD_bus_icon", 
-    attribution: "",
-    sourceType: "geojson",
-    layerType: "symbol", 
-    symbolization: {      
-      layout: {
-        visibility: "visible",
-        "icon-image": DATA_RETRIEVAL.ICONS.GENERIC_MARKER,
-        "icon-size": 1.0, 
-      },
-      paint: {
-        // Here is the dynamic color logic brought over from your circle layer
-        "icon-color": [
-          "match",
-          ["get", "Evaluation"],   // Look at the 'Evaluation' property
-          "Has PID", "#A6D96A",    // If "Has PID", make it green
-          "No PID", "#F03B20",     // If "No PID", make it red
-          "hsl(0, 0%, 70%)"        // Default color if neither matches
-        ],
-        "icon-halo-color": "black",
-        "icon-halo-width": 2,
-      },
-    },
-    legend: {
-      class: "legend",
-      items: [
-        {
-          styleHeight: "12px",
-          display: "inline-block",
-          icon: "assets/img/marker-stroked.svg",
-          color: "#A6D96A", // Added so your legend builder knows what color to show
-          range: ["Has PID"]
-        },
-        {
-          styleHeight: "12px",
-          display: "inline-block",
-          icon: "assets/img/marker-stroked.svg",
-          color: "#F03B20",
-          range: ["No PID"]
-        }
-      ],
-    },
-    states: {
-      popUps: true,
-      icons: true,
-      highlight: false,
-      category: true,
-      dateRange: false,
-    },
-    popUps: {
-      event: "mousemove",
-      popUpFeatures: [
-        {
-          type: "title",      
-          value: "Type"       
-        },
-        {
-          type: "keyword",    
-          text: "Name: ",
-          value: "NOM_PARADA"
-        },
-        {
-          type: "keyword",       
-          text: "Evaluation: ",
-          value: "Evaluation"
-        }
-      ]
-    },
-    filterBy: {
-      active: false,
-      fFeature: "Type",
-    },
-  }
+
 
 ];
