@@ -52,9 +52,9 @@ function addMap(baseCoordinates) {
     },
     center: baseCoordinates, //Starting position [lng, lat]. Note that lat must be set between -90 and 90
     zoom: 12, //Starting zoom
-    minZoom:1, //Zoom bounds
+    minZoom: 11.5, //Zoom bounds
     maxZoom: 18,
-    // maxBounds: baseBounds, //Coordinate bounds
+    maxBounds: baseBounds, //Coordinate bounds
     pitch: 45,
     bearing: -45,
     attributionControl: false, //No default attribution
@@ -210,29 +210,6 @@ function addLegend2(legendData) {
   return legend;
 } // End of addLegend2
 
-function addLegend3(legendData) {
-  const legend = document.createElement("div");
-  legend.className = legendData.class;
-  legendData.items.forEach((item) => {
-    let subDiv = document.createElement("div");
-
-    if (item.icon){
-      subDiv.innerHTML = `<img src="${item.icon}"></img>`;
-    } else {
-      subDiv.innerHTML = `<span style="background-color: ${item.backgroundColor}"></span>`;
-    }
-
-    let range = item.range.join(" - ");
-    let text = document.createElement("i");
-    text.textContent = range;
-    subDiv.appendChild(text);
-    legend.appendChild(subDiv);
-  });
-
-  return legend;
-} //End of addLegend3
-
-
 
 function addSlots(map, length) {
   // Empty source to add the layers without data (positioning layers)
@@ -247,8 +224,6 @@ function addSlots(map, length) {
     type: "symbol",
     source: "empty",
   });
-  
-
   
   // Postioning layers in relation to each other, dependant on the amount of layers (length) a map has
   for(i=1; i<length; i++){
@@ -338,19 +313,6 @@ function addSources(map, layer_data, sourceLayerName, sourceType) {
     data: layer_data,
   });
 } //End of addSources
-
-function addLayers2(map, layerType, sourceLayerName, symbolization, bID) {
-  map.addLayer(
-    {
-      id: sourceLayerName,
-      type: layerType,
-      source: sourceLayerName,
-      layout: symbolization.layout, 
-      paint: symbolization.paint,
-    },
-    bID //Before Layer ID, to order layers according to slots
-  );
-} //End of addLayers
 
 function addLayers(map, layerType, sourceLayerName, symbolization, visible, bID) {
   map.addLayer(
