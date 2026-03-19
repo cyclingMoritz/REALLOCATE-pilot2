@@ -56,7 +56,7 @@
 
         selectedLayers.forEach((layer, position) => {
           if (layer.sourceLayerName=="IMPD_bus" | layer.sourceLayerName=="IMPD_metro"){
-            let data_dir = `data/${layer.sourceLayerName}.geojson`;
+            let data_dir = `../data/${layer.sourceLayerName}.geojson`;
             sendRequest(data_dir).then(function (layerData) {
               addSources(map, layerData, layer.sourceLayerName, layer.sourceType);
 
@@ -64,7 +64,7 @@
             });
           }
           else {
-          let data_dir = `data/${layer.sourceLayerName}.geojson`;
+          let data_dir = `../data/${layer.sourceLayerName}.geojson`;
           sendRequest(data_dir).then(function (layerData) {
             addSources(map, layerData, layer.sourceLayerName, layer.sourceType);
 

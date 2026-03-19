@@ -51,7 +51,7 @@
         addSlots(map, selectedLayers.length); //For layer positioning "z-index"
 
         selectedLayers.forEach((layer, position) => {
-          let data_dir = `data/${layer.sourceLayerName}.geojson`;
+          let data_dir = `../data/${layer.sourceLayerName}.geojson`;
           sendRequest(data_dir).then(function (layerData) {
             addSources(map, layerData, layer.sourceLayerName, layer.sourceType);
             addLayers(map, layer.layerType, layer.sourceLayerName, layer.symbolization, layer.states.visible, `layerIndex${position}`);
