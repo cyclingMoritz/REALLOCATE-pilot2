@@ -1,0 +1,166 @@
+/* Import a clean sans-serif font similar to the screenshots */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+:root {
+  --reallocate-blue: #d0e1e6;
+  --text-dark: #4a4a4a;
+  --link-pink: #c9367c;
+  --bg-white: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-dark);
+  background-color: var(--bg-white);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header Styling */
+header {
+  background-color: var(--reallocate-blue);
+  padding: 15px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header img {
+  height: 60px; /* Adjust based on your logo */
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: var(--link-pink);
+}
+
+/* Main Content Styling */
+main {
+  padding: 60px 50px;
+  flex: 1; /* Pushes footer to the bottom */
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* Map Links / Buttons */
+.map-links {
+  display: flex;
+  gap: 15px;
+}
+
+.btn {
+  background-color: var(--reallocate-blue);
+  color: var(--text-dark);
+  padding: 12px 24px;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #b8ced4;
+}
+
+/* Footer Styling */
+footer {
+  border-top: 1px solid #eee;
+  padding: 40px 50px 20px;
+}
+
+.funding-section {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.funding-text {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+.footer-logos img {
+  height: 60px;
+  margin-right: 20px;
+}
+
+.footer-bottom {
+  border-top: 2px solid #ddd;
+  padding-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.footer-bottom a {
+  color: var(--link-pink);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.footer-bottom a:hover {
+  text-decoration: underline;
+}
+
+/* Acknowledgements Grid Styling */
+.partner-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.partner-card {
+  background-color: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 30px;
+  flex: 1;
+  min-width: 250px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.partner-card:hover {
+  transform: translateY(-5px);
+}
+
+.partner-logo {
+  height: 70px;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.partner-card h3 {
+  margin-top: 0;
+  color: var(--link-pink);
+  font-size: 1.2rem;
+}
+
+.partner-card p {
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
