@@ -467,5 +467,83 @@ popUps: {
       active: true,
       fFeature: "category",
     },
+  },
+
+// Bus Stops// Bus Stops (Basic Icon Test)
+{
+    name: "Bus Stops",
+    sourceLayerName: "IMPD_bus_icon", 
+    attribution: "",
+    sourceType: "geojson",
+    layerType: "symbol", 
+    symbolization: {      
+      layout: {
+        visibility: "visible",
+        "icon-image": DATA_RETRIEVAL.ICONS.GENERIC_MARKER,
+        "icon-size": 1.0, 
+      },
+      paint: {
+        // Here is the dynamic color logic brought over from your circle layer
+        "icon-color": [
+          "match",
+          ["get", "Evaluation"],   // Look at the 'Evaluation' property
+          "Has PID", "#A6D96A",    // If "Has PID", make it green
+          "No PID", "#F03B20",     // If "No PID", make it red
+          "hsl(0, 0%, 70%)"        // Default color if neither matches
+        ],
+        "icon-halo-color": "black",
+        "icon-halo-width": 2,
+      },
+    },
+    legend: {
+      class: "legend",
+      items: [
+        {
+          styleHeight: "12px",
+          display: "inline-block",
+          icon: "assets/img/marker-stroked.svg",
+          color: "#A6D96A", // Added so your legend builder knows what color to show
+          range: ["Has PID"]
+        },
+        {
+          styleHeight: "12px",
+          display: "inline-block",
+          icon: "assets/img/marker-stroked.svg",
+          color: "#F03B20",
+          range: ["No PID"]
+        }
+      ],
+    },
+    states: {
+      popUps: true,
+      icons: true,
+      highlight: false,
+      category: true,
+      dateRange: false,
+    },
+    popUps: {
+      event: "mousemove",
+      popUpFeatures: [
+        {
+          type: "title",      
+          value: "Type"       
+        },
+        {
+          type: "keyword",    
+          text: "Name: ",
+          value: "NOM_PARADA"
+        },
+        {
+          type: "keyword",       
+          text: "Evaluation: ",
+          value: "Evaluation"
+        }
+      ]
+    },
+    filterBy: {
+      active: false,
+      fFeature: "Type",
+    },
   }
+
 ];

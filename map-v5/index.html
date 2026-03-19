@@ -55,7 +55,7 @@
         addSlots(map, selectedLayers.length); //For layer positioning "z-index"
 
         selectedLayers.forEach((layer, position) => {
-          if (layer.sourceLayerName=="bizkaibus_stops"){
+          if (layer.sourceLayerName=="bizkaibus_stops" | layer.sourceLayerName=="IMPD_bus_icon"){
             let data_dir = `data/${layer.sourceLayerName}.geojson`;
             sendRequest(data_dir).then(function (layerData) {
               addSources(map, layerData, layer.sourceLayerName, layer.sourceType);
